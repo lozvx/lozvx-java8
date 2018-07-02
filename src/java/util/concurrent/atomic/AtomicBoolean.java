@@ -50,6 +50,7 @@ import sun.misc.Unsafe;
 public class AtomicBoolean implements java.io.Serializable {
     private static final long serialVersionUID = 4654671469794556979L;
     // setup to use Unsafe.compareAndSwapInt for updates
+    // 使用unsafe类进行CAS操作
     private static final Unsafe unsafe = Unsafe.getUnsafe();
     private static final long valueOffset;
 
@@ -60,6 +61,7 @@ public class AtomicBoolean implements java.io.Serializable {
         } catch (Exception ex) { throw new Error(ex); }
     }
 
+    //内部存储
     private volatile int value;
 
     /**

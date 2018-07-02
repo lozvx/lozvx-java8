@@ -769,6 +769,7 @@ public class ConcurrentHashMap<K,V> extends AbstractMap<K,V>
     /**
      * The array of bins. Lazily initialized upon first insertion.
      * Size is always a power of two. Accessed directly by iterators.
+     * 内部存储，链表的数组
      */
     transient volatile Node<K,V>[] table;
 

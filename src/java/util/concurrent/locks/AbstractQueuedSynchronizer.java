@@ -530,6 +530,7 @@ public abstract class AbstractQueuedSynchronizer
     /**
      * The synchronization state.
      */
+    //重入锁的次数
     private volatile int state;
 
     /**
@@ -1195,6 +1196,7 @@ public abstract class AbstractQueuedSynchronizer
      *        can represent anything you like.
      */
     public final void acquire(int arg) {
+        //尝试获取同步状态，获取不到添加到等待列表
         if (!tryAcquire(arg) &&
             acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
             selfInterrupt();
@@ -1934,6 +1936,7 @@ public abstract class AbstractQueuedSynchronizer
          * @throws IllegalMonitorStateException if {@link #isHeldExclusively}
          *         returns {@code false}
          */
+        // 唤醒一个等待在Condition上的线程，该线程从等待方法返回前必须
         public final void signal() {
             if (!isHeldExclusively())
                 throw new IllegalMonitorStateException();

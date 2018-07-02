@@ -203,12 +203,15 @@ public class ReentrantLock implements Lock, java.io.Serializable {
          * acquire on failure.
          */
         final void lock() {
+            //CAS操作，获取同步状态，ture,获取锁成功
             if (compareAndSetState(0, 1))
+                //成功则将独占锁线程设置为当前线程
                 setExclusiveOwnerThread(Thread.currentThread());
             else
+                //否则再次请求同步状态
                 acquire(1);
         }
-
+        //重写AQS的tryAcquire方法
         protected final boolean tryAcquire(int acquires) {
             return nonfairTryAcquire(acquires);
         }
@@ -232,6 +235,7 @@ public class ReentrantLock implements Lock, java.io.Serializable {
             final Thread current = Thread.currentThread();
             int c = getState();
             if (c == 0) {
+                //公平锁会去判断同步队列是否有结点
                 if (!hasQueuedPredecessors() &&
                     compareAndSetState(0, acquires)) {
                     setExclusiveOwnerThread(current);
@@ -529,6 +533,7 @@ public class ReentrantLock implements Lock, java.io.Serializable {
      * @return the number of holds on this lock by the current thread,
      *         or zero if this lock is not held by the current thread
      */
+    //返回当前线程保持锁的次数
     public int getHoldCount() {
         return sync.getHoldCount();
     }
